@@ -1,35 +1,9 @@
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from .models import Technician, AutomobileVO, Appointment
-from common.json import ModelEncoder
+from .encoders import TechnicianEncoder, AppointmentEncoder
 from django.http import JsonResponse
 import json
-
-# Create your views here.
-
-class TechnicianEncoder(ModelEncoder):
-    model = Technician
-    properties = [
-        "first_name",
-        "last_name",
-        "employee_id",
-        "id",
-    ]
-
-class AppointmentEncoder(ModelEncoder):
-    model = Appointment
-    properties = [
-        "id",
-        "date_time",
-        "reason",
-        "status",
-        "vin",
-        "customer",
-        "technician",
-    ]
-    encoders = {
-        "technician": TechnicianEncoder(),
-    }
 
 
 @require_http_methods(["GET", "POST"])
@@ -82,28 +56,28 @@ def api_list_appointments(request):
             encoder=AppointmentEncoder,
         )
     else:
+        content = json.loads(request.body)
         try:
-            content = json.loads(request.body)
-            try:
-                employee_id = content["technician"]
-                technician = Technician.objects.get(employee_id=employee_id)
-                content["technician"] = technician
-            except Technician.DoesNotExist:
-                return JsonResponse(
-                    {"message": "Error! Invalid technician!"},
-                    status=400,
-                )
-            appointment = Appointment.objects.create(**content)
+            employee_id = content["technician"]
+            technician = Technician.objects.get(id=employee_id)
+            content["technician"] = technician
+
+            if AutomobileVO.objects.filter(vin=content["vin"]).exists():
+                content["is_vip"] = True
+            else:
+                content["is_vip"] = False
+
+        except Technician.DoesNotExist:
             return JsonResponse(
-                appointment,
-                encoder=AppointmentEncoder,
-                safe=False,
-            )
-        except:
-            return JsonResponse(
-                {"message": "Error! Could not create appointment!"},
+                {"message": "Error! Invalid technician!"},
                 status=400,
             )
+        appointment = Appointment.objects.create(**content)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentEncoder,
+            safe=False,
+        )
 
 
 @require_http_methods(["DELETE"])

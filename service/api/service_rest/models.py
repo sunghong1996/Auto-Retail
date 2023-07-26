@@ -27,3 +27,4 @@ class Appointment(models.Model):
         related_name="appointments",
         on_delete=models.CASCADE,
     )
+    is_vip = models.BooleanField(null=True, default=False)
