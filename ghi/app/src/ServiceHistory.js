@@ -1,38 +1,15 @@
 import { useEffect, useState } from 'react';
 
 
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDay()
-    return `${month}/${day}/${year}`
-}
-
-
-function formatTime(dateString) {
-    let date = new Date(dateString);
-    let hours = date.getUTCHours();
-    let minutes = ("00" + date.getUTCMinutes()).slice(-2);
-    let AMPM = 'AM';
-    if (hours > 12) {
-        hours -= 12;
-        AMPM = 'PM';
-    }
-    return `${hours}:${minutes} ${AMPM}`
-}
-
-
 function ServiceHistory() {
     const [formData, setFormData] = useState({
         vin: "",
     })
-
     const [appointments, setAppointments] = useState([]);
 
     const fetchAppointmentData = async (vin) => {
-        const url = "http://localhost:8080/api/appointments/";
-        const response = await fetch(url);
+        const apptUrl = "http://localhost:8080/api/appointments/";
+        const response = await fetch(apptUrl);
         if (response.ok) {
             const data = await response.json();
             let relevant_appointments = []
@@ -40,7 +17,7 @@ function ServiceHistory() {
                 relevant_appointments = data.appointments
             } else {
                 for (let appointment of data.appointments) {
-                    if (appointment.vin == vin) {
+                    if (appointment.vin === vin) {
                         relevant_appointments.push(appointment)
                     }
                 }
@@ -66,6 +43,29 @@ function ServiceHistory() {
         event.preventDefault();
         fetchAppointmentData(formData.vin);
     }
+
+
+function formatTime(dateString) {
+    let date = new Date(dateString);
+    let hours = date.getUTCHours();
+    let minutes = ("00" + date.getUTCMinutes()).slice(-2);
+    let AMPM = 'AM';
+    if (hours > 12) {
+        hours -= 12;
+        AMPM = 'PM';
+    }
+    return `${hours}:${minutes} ${AMPM}`
+}
+
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDay()
+    return `${month}/${day}/${year}`
+}
+
 
     return (
         <>

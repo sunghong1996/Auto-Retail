@@ -9,6 +9,8 @@ import ServiceHistory from './ServiceHistory';
 import ManufacturerList from './ManufacturerList';
 import ManufacturerForm from './ManufacturerForm';
 import VehicleModelsList from './VehicleModelsList';
+import VehicleModelForm from './VehicleModelForm';
+
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
           </Route>
 
           <Route path="models">
+            <Route path="add" element={<VehicleModelForm />} />
             <Route path="list" element={<VehicleModelsList />} />
           </Route>
         </Routes>
