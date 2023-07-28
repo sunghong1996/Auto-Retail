@@ -3,23 +3,25 @@ from django.urls import reverse
 
 
 class Salesperson(models.Model):
-    name = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
     employee_id = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
-        return self.name
+        return self.first_name
 
     def get_api_url(self):
         return reverse("api_salesperson", kwargs={"pk": self.pk})
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.name
+        return self.first_name
 
 
 class AutomobileVO(models.Model):
@@ -50,7 +52,7 @@ class Sale(models.Model):
     )
 
     def __str__(self):
-        return self.salesperson.name
+        return self.salesperson.first_name
 
     def get_api_url(self):
         return reverse("api_sale", kwargs={"pk": self.pk})

@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
-import CustomerForm from './CustomerForm';
-import SaleList from './SalesList';
+
 import TechnicianForm from './TechnicianForm';
 import TechniciansList from './TechnicianList';
 import AppointmentForm from './AppointmentForm';
@@ -13,6 +12,16 @@ import ManufacturerForm from './ManufacturerForm';
 import VehicleModelsList from './VehicleModelsList';
 import VehicleModelForm from './VehicleModelForm';
 
+import AutomobilesForm from './AutomobilesForm';
+import AutomobilesList from './AutomobilesList'
+import CustomerForm from './CustomerForm';
+import CustomerList from './CustomerList';
+import SalesForm from './SalesForm';
+import SaleList from './SalesList';
+import SalesPersonForm from './SalespersonForm';
+import SalesPersonHistory from './SalesPersonHistory'
+
+
 
 function App() {
   return (
@@ -21,23 +30,29 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+          
           <Route path="sale"> 
-            <Route path="add" element={<SaleList />} />
+            <Route path="add" element={<SalesForm />} />
             <Route path="list" element={<SaleList/>} />
           </Route>
+
           <Route path="customer">
             <Route path="add" element={<CustomerForm />} />
-            <Route path="list" element={<CustomerList />} />
+            <Route path="list" element={<CustomerList/>} />
           </Route>
+
           <Route path="salesperson">
-            <Route path="add" element={<TechnicianForm />} />
-            <Route path="list" element={<TechniciansList />} />
-            <Route path="history" element={<TechniciansList />} />
+            <Route path="add" element={<SalesPersonForm />} />
+            <Route path="history" element={<SalesPersonHistory />} />
           </Route>
-          <Route path="customer">
-            <Route path="add" element={<TechnicianForm />} />
-            <Route path="list" element={<TechniciansList />} />
+
+          <Route path="automobiles">
+            <Route path="add" element={<AutomobilesForm />} />
+            <Route path="list" element={<AutomobilesList />} />
           </Route>
+
+
+
           <Route path="technicians">
             <Route path="add" element={<TechnicianForm />} />
             <Route path="list" element={<TechniciansList />} />

@@ -1,10 +1,8 @@
-from django.shortcuts import render
 import json
 from sales_rest.models import AutomobileVO, Customer, Salesperson, Sale
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from .encoders import (
-    AutomobileVOEncoder,
     SalespersonEncoder,
     CustomerEncoder,
     SaleEncoder,
