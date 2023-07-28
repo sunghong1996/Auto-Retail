@@ -22,7 +22,7 @@ function CustomerForm() {
         data.address  = address;
         data.phone_number = phone_number;
 
-        const url = "http://localhost:8090/api/customers/";
+        const url = "http://localhost:8090/api/customer/";
         const fetchConfig = {
             method: "post",
             body: JSON.stringify(data),

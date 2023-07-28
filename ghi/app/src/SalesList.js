@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-function SaleList() {
-    const [sale, setSale] = useState([]);
+function SalesList() {
+    const [sales, setSales] = useState([]);
     const fetchData = async() => {
         const url = "http://localhost:8090/api/sales/";
         const response = await fetch(url);
         
         if (response.ok) {
             const data = await response.json();
-            setSale(data.sale);
+            setSales(data.sales);
         }
     };
     useEffect(() =>{
@@ -17,7 +17,7 @@ function SaleList() {
 
     return (
         <div>    
-            <h1 className="shadow p-4 mt-4">Sale List</h1>
+            <h1 className="shadow p-4 mt-4">Sales List</h1>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -29,7 +29,7 @@ function SaleList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {sale.map(sale => {
+                    {sales.map(sale => {
                         return (
                             <tr key={sale.id}>
                                 <td>{sale.salesperson.id}</td>
@@ -46,4 +46,4 @@ function SaleList() {
     )
 }
 
-export default SaleList;
+export default SalesList;
